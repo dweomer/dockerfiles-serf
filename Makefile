@@ -1,0 +1,27 @@
+# GNUmakefile
+
+REPOSITORY = dweomer/serf
+VERSIONS   = $(sort $(notdir $(realpath $(wildcard versions/*))))
+TAGS       = $(filter-out $(VERSIONS),$(sort $(notdir $(wildcard versions/*))))
+
+export REPOSITORY VERSIONS TAGS
+
+all: $(VERSIONS) $(TAGS)
+
+build:
+ifndef VERSION
+	$(error VERSION is required)
+endif
+	docker build \
+		--build-arg SERF_VERSION=$(VERSION) \
+		--pull \
+		--tag $(REPOSITORY):$(VERSION) \
+		.
+
+$(TAGS): $(VERSIONS)
+	docker tag $(REPOSITORY):$(notdir $(realpath versions/$@)) $(REPOSITORY):$@
+
+$(VERSIONS):
+	@make build VERSION=$@
+
+.PHONY: all build $(VERSIONS) $(TAGS)
