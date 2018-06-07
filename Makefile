@@ -24,4 +24,4 @@ $(TAGS): $(VERSIONS)
 $(VERSIONS):
 	@make build VERSION=$@
 
-.PHONY: all build $(VERSIONS) $(TAGS)
+.PHONY: all build $(VERSIONS) $(TAGS) push
