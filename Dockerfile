@@ -14,17 +14,18 @@ RUN unzip serf_${SERF_VERSION}_linux_amd64.zip -d /usr/local/bin
 
 FROM alpine
 
-ARG SERF_GID=1337
-ARG SERF_UID=7337
+ARG SERF_GID=7946
+ARG SERF_UID=7373
 
 RUN set -x \
  && apk add --no-cache \
     dumb-init \
+    jq \
     su-exec \
  && addgroup -g ${SERF_GID} serf \
  && adduser -S -G serf -u ${SERF_UID} serf
 COPY --from=hashibase /usr/local/bin/* /usr/local/bin/
 
-USER serf
-ENTRYPOINT ["serf"]
+# USER serf
+ENTRYPOINT ["dumb-init", "--", "su-exec", "serf:serf", "serf"]
 CMD ["help"]
