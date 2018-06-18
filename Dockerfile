@@ -19,6 +19,7 @@ ARG SERF_UID=7373
 
 RUN set -x \
  && apk add --no-cache \
+    coreutils \
     dumb-init \
     jq \
     su-exec \
