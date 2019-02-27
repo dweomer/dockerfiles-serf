@@ -2,7 +2,7 @@ FROM dweomer/hashibase as hashibase
 
 WORKDIR /tmp
 
-ARG SERF_VERSION=0.8.1
+ARG SERF_VERSION=0.8.2
 
 ADD https://releases.hashicorp.com/serf/${SERF_VERSION}/serf_${SERF_VERSION}_SHA256SUMS .
 ADD https://releases.hashicorp.com/serf/${SERF_VERSION}/serf_${SERF_VERSION}_SHA256SUMS.sig .
